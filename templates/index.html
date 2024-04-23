@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC Video Stream</title>
+</head>
+<body>
+    <h1>WebRTC Video Stream</h1>
+    <video id="videoElement" autoplay></video>
+    <script>
+        var video = document.getElementById('videoElement');
+        var stream = null;
+
+        async function startVideo() {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        }
+
+        async function stopVideo() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
+        }
+
+        window.onload = startVideo;
+        window.onunload = stopVideo;
+    </script>
+</body>
+</html>
